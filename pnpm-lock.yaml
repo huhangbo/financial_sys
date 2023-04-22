@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@ant-design/icons': ^5.0.1
   '@commitlint/cli': ^17.6.1
   '@commitlint/config-conventional': ^17.6.1
   '@types/node': 18.15.13
@@ -20,6 +21,7 @@ specifiers:
   typescript: 5.0.4
 
 dependencies:
+  '@ant-design/icons': 5.0.1_biqbaboplfbrettd7655fr4n2y
   '@types/node': 18.15.13
   '@types/react': 18.0.38
   '@types/react-dom': 18.0.11
