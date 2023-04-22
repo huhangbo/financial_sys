@@ -1,4 +1,20 @@
 {
+  // eslint vscode config
+  "eslint.nodePath": "infra/node_modules",
+  "eslint.trace.server": "verbose",
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true // this allows ESLint to auto fix on save
+  },
+  // prettier vscode config
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  // (optional) "command + k + n" to trigger this small tool within vscode to look for package.json in node_modules
+  "search-node-modules.path": ".eden-mono/temp/node_modules",
   "typescript.tsdk": "node_modules/.pnpm/typescript@5.0.4/node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true
 }
