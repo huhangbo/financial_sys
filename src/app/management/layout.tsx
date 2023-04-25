@@ -1,29 +1,34 @@
 'use client';
-import Icon, { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, MenuProps } from 'antd';
+import Icon from '@ant-design/icons';
+import { Layout, Menu, MenuProps } from 'antd';
+import { useRouter, useSelectedLayoutSegment } from 'next/navigation';
 import React from 'react';
 
-const { Header, Content, Sider } = Layout;
+const { Content, Sider } = Layout;
 
-export default function layout({ children }: { children: React.ReactNode }) {
+export default function Layout_management({ params, children }: { params: any; children: React.ReactNode }) {
+  const currPath = useSelectedLayoutSegment();
+  const { replace } = useRouter();
   const items: MenuProps['items'] = [
     {
-      key: `sub ${Math.random()}`,
-      icon: <Icon />,
-      label: `subnav`,
-      onClick: () => {}
+      key: `detail`,
+      icon: <Icon type="" />,
+      label: `收支明细`,
+      onClick: () => {
+        replace('/management/detail');
+      }
     },
     {
-      key: `sub ${Math.random()}`,
+      key: `income`,
       icon: <Icon />,
-      label: `subnav`,
-      onClick: () => {}
+      label: `收入记账`,
+      onClick: () => replace('/management/income')
     },
     {
-      key: `sub ${Math.random()}`,
+      key: `expend`,
       icon: <Icon />,
-      label: `subnav`,
-      onClick: () => {}
+      label: `支出记账`,
+      onClick: () => replace('/management/expend')
     }
   ];
   return (
@@ -31,8 +36,9 @@ export default function layout({ children }: { children: React.ReactNode }) {
       <Sider width={200}>
         <Menu
           mode="inline"
-          defaultSelectedKeys={['0']}
-          defaultOpenKeys={['sub1']}
+          defaultSelectedKeys={['detail']}
+          selectable={true}
+          selectedKeys={[currPath ?? 'detail']}
           style={{ height: '100%', borderRight: 0 }}
           items={items}
         />

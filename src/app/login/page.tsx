@@ -1,96 +1,52 @@
 'use client';
-import React, { FC, useState } from 'react';
-import { Form, Input, Button, message, Spin } from 'antd';
-// import './index.less';
-import Icon, { LockOutlined } from '@ant-design/icons';
+import React, { useState } from 'react';
+import { Form, Input, Button } from 'antd';
 
-const Login: FC<any> = (props) => {
-  // const { form, token, login, getUserInfo } = props;
-  // const { getFieldDecorator } = form;
+const Login = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-  const [loading, setLoading] = useState(false);
+  const onFinish = (values: any) => {
+    console.log('Success:', values);
+  };
 
-  // const handleLogin = (username, password) => {
-  //   // 登录完成后 发送请求 调用接口获取用户信息
-  //   setLoading(true);
-  //   login(username, password)
-  //     .then((data) => {
-  //       message.success('登录成功');
-  //       handleUserInfo(data.token);
-  //     })
-  //     .catch((error) => {
-  //       setLoading(false);
-  //       message.error(error);
-  //     });
-  // };
+  const onFinishFailed = (errorInfo: any) => {
+    console.log('Failed:', errorInfo);
+  };
 
-  // const handleUserInfo = (token) => {
-  //   getUserInfo(token)
-  //     .then((data) => {})
-  //     .catch((error) => {
-  //       message.error(error);
-  //     });
-  // };
+  const handleUsernameChange = (e: any) => {
+    setUsername(e.target.value);
+  };
 
-  // const handleSubmit = (event) => {
-  //   // 阻止事件的默认行为
-  //   event.preventDefault();
-
-  //   // 对所有表单字段进行检验
-  //   form.validateFields((err, values) => {
-  //     // 检验成功
-  //     if (!err) {
-  //       const { username, password } = values;
-  //       handleLogin(username, password);
-  //     } else {
-  //       console.log('检验失败!');
-  //     }
-  //   });
-  // };
+  const handlePasswordChange = (e: any) => {
+    setPassword(e.target.value);
+  };
 
   return (
-    <div className="login-container">
-      <Form onSubmitCapture={() => {}} className="content">
-        <div className="title">
-          <h2>用户登录</h2>
-        </div>
-        <Spin spinning={loading} tip="登录中...">
-          <Form.Item>
-            <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="用户名" />
-          </Form.Item>
-          <Form.Item>
-            {/* {getFieldDecorator('password', {
-              rules: [
-                {
-                  required: true,
-                  whitespace: true,
-                  message: '请输入密码'
-                }
-              ],
-              initialValue: '123456' // 初始值
-            })( */}
-            <Input
-              prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
-              type="password"
-              placeholder="密码"
-            />
-            {/* )} */}
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit" className="login-form-button">
-              登录
-            </Button>
-          </Form.Item>
-          <Form.Item>
-            <span>账号 : admin 密码 : 随便填</span>
-            <br />
-            <span>账号 : editor 密码 : 随便填</span>
-            <br />
-            <span>账号 : guest 密码 : 随便填</span>
-          </Form.Item>
-        </Spin>
-      </Form>
-    </div>
+    <Form name="basic" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+      <Form.Item
+        label="Username"
+        name="username"
+        rules={[{ required: true, message: 'Please input your username!' }]}
+      >
+        <Input value={username} onChange={handleUsernameChange} />
+      </Form.Item>
+
+      <Form.Item
+        label="Password"
+        name="password"
+        rules={[{ required: true, message: 'Please input your password!' }]}
+      >
+        <Input.Password value={password} onChange={handlePasswordChange} />
+      </Form.Item>
+
+      <Form.Item>
+        <Button type="primary" htmlType="submit">
+          Submit
+        </Button>
+      </Form.Item>
+    </Form>
   );
 };
-export default () => {};
+
+export default Login;
