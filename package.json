@@ -19,6 +19,8 @@
     ]
   },
   "dependencies": {
+    "@emotion/css": "^11.10.6",
+    "@ant-design/pro-components": "^2.4.9",
     "@ant-design/icons": "^5.0.1",
     "@types/node": "18.15.13",
     "@types/react": "18.0.38",

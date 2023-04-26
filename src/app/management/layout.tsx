@@ -1,6 +1,6 @@
 'use client';
 import Icon from '@ant-design/icons';
-import { Layout, Menu, MenuProps } from 'antd';
+import { Layout, MenuProps } from 'antd';
 import { useRouter, useSelectedLayoutSegment } from 'next/navigation';
 import React from 'react';
 
@@ -33,7 +33,7 @@ export default function Layout_management({ params, children }: { params: any; c
   ];
   return (
     <Layout>
-      <Sider width={200}>
+      {/* <Sider width={200}>
         <Menu
           mode="inline"
           defaultSelectedKeys={['detail']}
@@ -50,10 +50,10 @@ export default function Layout_management({ params, children }: { params: any; c
             margin: 0,
             minHeight: 280
           }}
-        >
-          {children}
-        </Content>
-      </Layout>
+        > */}
+      {children}
+      {/* </Content>
+      </Layout> */}
     </Layout>
   );
 }
