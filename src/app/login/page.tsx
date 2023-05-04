@@ -57,7 +57,7 @@ const Login = () => {
           登录
         </Button>
         <Button type="link" onClick={toRegister} style={{ width: '100%', margin: '0 auto' }}>
-          点击注册
+          点击去注册
         </Button>
       </Form.Item>
     </Form>
