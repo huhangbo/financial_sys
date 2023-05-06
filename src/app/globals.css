@@ -94,3 +94,6 @@ a {
     color-scheme: dark;
   }
 }
+.ant-table-cell {
+  font-weight: bold;
+}
