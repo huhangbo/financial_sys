@@ -275,6 +275,8 @@ const Component = ({ children }: { children: React.ReactNode }) => {
     >
       <ProConfigProvider hashed={false}>
         <ProLayout
+          title="财富管理系统"
+          logo="https://gw.alipayobjects.com/mdn/rms_b5fcc5/afts/img/A*1NHAQYduQiQAAAAAAAAAAABkARQnAQ"
           prefixCls="my-prefix"
           bgLayoutImgList={[
             {
@@ -381,12 +383,16 @@ const Component = ({ children }: { children: React.ReactNode }) => {
                     onOpenChange={(v) => setClicked(v)}
                     content={<Calculator mode="basic" />}
                   >
-                    <>
-                      <Button>
-                        <CalculatorFilled />
-                        <span>计算器</span>
-                      </Button>
-                    </>
+                    {document.body.clientWidth > 768 ? (
+                      <>
+                        <Button>
+                          <CalculatorFilled />
+                          <span>计算器</span>
+                        </Button>
+                      </>
+                    ) : (
+                      <></>
+                    )}
                   </Popover>
                   <Dropdown
                     menu={{
@@ -431,12 +437,7 @@ const Component = ({ children }: { children: React.ReactNode }) => {
               return defaultDom;
             }
             if (_.isMobile) return defaultDom;
-            return (
-              <>
-                {defaultDom}
-                {/* <MenuCard /> */}
-              </>
-            );
+            return <>{defaultDom}</>;
           }}
           onMenuHeaderClick={(e) => console.log(e)}
           menuItemRender={(item, dom) => {
