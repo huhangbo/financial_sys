@@ -1,9 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    appDir: true,
+    appDir: true
   },
-  transpilePackages: ['antd'],
-}
+  webpack(config) {
+    config.experiments = { ...config.experiments, topLevelAwait: true };
+    return config;
+  },
+  transpilePackages: ['antd', '@ant-design/pro-components']
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

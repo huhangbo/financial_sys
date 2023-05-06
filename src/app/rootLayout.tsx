@@ -1,15 +1,20 @@
 'use client';
 
 import {
+  CalculatorFilled,
   CaretDownFilled,
-  ChromeFilled,
   CrownFilled,
   DoubleRightOutlined,
+  EditFilled,
   LogoutOutlined,
+  MoneyCollectFilled,
+  NotificationFilled,
+  PayCircleFilled,
   PlusCircleFilled,
+  ProjectFilled,
   SearchOutlined,
-  SmileFilled,
-  TabletFilled
+  SignalFilled,
+  UserOutlined
 } from '@ant-design/icons';
 import type { ProSettings } from '@ant-design/pro-components';
 import { ProConfigProvider, ProLayout } from '@ant-design/pro-components';
@@ -292,7 +297,7 @@ const Component = ({ children }: { children: React.ReactNode }) => {
               {
                 path: '/management',
                 name: '财务管理',
-                icon: <SmileFilled />,
+                icon: <MoneyCollectFilled />,
                 routes: [
                   {
                     path: '/management/detail',
@@ -300,12 +305,12 @@ const Component = ({ children }: { children: React.ReactNode }) => {
                     icon: 'https://gw.alipayobjects.com/zos/antfincdn/upvrAjAPQX/Logo_Tech%252520UI.svg'
                   },
                   {
-                    path: '/management/expend',
+                    path: '/management/income',
                     name: '收入记账',
                     icon: <CrownFilled />
                   },
                   {
-                    path: '/management/income',
+                    path: '/management/expend',
                     name: '支出记账',
                     icon: <CrownFilled />
                   }
@@ -314,74 +319,45 @@ const Component = ({ children }: { children: React.ReactNode }) => {
               {
                 path: '/statistic',
                 name: '财务统计',
-                icon: <CrownFilled />,
+                icon: <ProjectFilled />,
                 access: 'canAdmin',
                 routes: [
                   {
-                    path: '/admin/sub-page1',
-                    name: '一级页面',
+                    path: '/statistic/year',
+                    name: '年度统计',
                     icon: 'https://gw.alipayobjects.com/zos/antfincdn/upvrAjAPQX/Logo_Tech%252520UI.svg'
                   },
                   {
-                    path: '/admin/sub-page2',
-                    name: '二级页面',
-                    icon: <CrownFilled />
-                  },
-                  {
-                    path: '/admin/sub-page3',
-                    name: '三级页面',
-                    icon: <CrownFilled />
+                    path: '/statistic/month',
+                    name: '月度统计',
+                    icon: <SignalFilled />
                   }
                 ]
               },
               {
                 name: '财务分析',
-                icon: <TabletFilled />,
-                path: '/analysis',
-                routes: [
-                  {
-                    path: '/list/sub-page',
-                    name: '列表页面',
-                    icon: <CrownFilled />,
-                    routes: [
-                      {
-                        path: 'sub-sub-page1',
-                        name: '一一级列表页面',
-                        icon: <CrownFilled />,
-                        component: './Welcome'
-                      },
-                      {
-                        path: 'sub-sub-page2',
-                        name: '一二级列表页面',
-                        icon: <CrownFilled />,
-                        component: './Welcome'
-                      },
-                      {
-                        path: 'sub-sub-page3',
-                        name: '一三级列表页面',
-                        icon: <CrownFilled />,
-                        component: './Welcome'
-                      }
-                    ]
-                  },
-                  {
-                    path: '/list/sub-page2',
-                    name: '二级列表页面',
-                    icon: <CrownFilled />,
-                    component: './Welcome'
-                  },
-                  {
-                    path: '/list/sub-page3',
-                    name: '三级列表页面',
-                    icon: <CrownFilled />,
-                    component: './Welcome'
-                  }
-                ]
+                icon: <SignalFilled />,
+                path: '/analysis'
               },
               {
-                path: 'https://ant.design',
-                name: 'Ant Design 官网外链',
-                icon: <ChromeFilled />
+                path: '/budget',
+                name: '财务预算',
+                icon: <PayCircleFilled />
+              },
+              {
+                path: '/note',
+                name: '备忘录',
+                icon: <EditFilled />
+              },
+              {
+                path: '/calculator',
+                name: '计算器',
+                icon: <CalculatorFilled />
+              },
+              {
+                path: '/news',
+                name: '新闻',
+                icon: <NotificationFilled />
               }
             ]
           }}
@@ -401,6 +377,12 @@ const Component = ({ children }: { children: React.ReactNode }) => {
                 <Dropdown
                   menu={{
                     items: [
+                      {
+                        key: 'userinfo',
+                        icon: <UserOutlined />,
+                        label: '个人信息',
+                        onClick: () => push('/user')
+                      },
                       {
                         key: 'logout',
                         icon: <LogoutOutlined />,
