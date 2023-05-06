@@ -31,6 +31,7 @@ const Login = () => {
 
   return (
     <Form
+      title="用户登录"
       name="basic"
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
@@ -53,7 +54,12 @@ const Login = () => {
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit" style={{ width: '100%', margin: '0 auto' }}>
+        <Button
+          type="primary"
+          htmlType="submit"
+          onClick={() => replace('/management/detail')}
+          style={{ width: '100%', margin: '0 auto' }}
+        >
           登录
         </Button>
         <Button type="link" onClick={toRegister} style={{ width: '100%', margin: '0 auto' }}>

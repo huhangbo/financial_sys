@@ -1,5 +1,6 @@
 'use client';
 import { Button, Checkbox, Form, Input, Select } from 'antd';
+import { useRouter } from 'next/navigation';
 
 const { Option } = Select;
 
@@ -35,9 +36,12 @@ const tailFormItemLayout = {
 
 const Register = () => {
   const [form] = Form.useForm();
-
+  const { replace } = useRouter();
   const onFinish = (values: any) => {
     console.log('Received values of form: ', values);
+  };
+  const toLogin = () => {
+    replace('/login');
   };
 
   const prefixSelector = (
@@ -53,6 +57,7 @@ const Register = () => {
       {...formItemLayout}
       form={form}
       name="register"
+      title="用户注册"
       onFinish={onFinish}
       initialValues={{ prefix: '86' }}
       style={{ width: '75%', maxWidth: 600, margin: '0 auto' }}
@@ -147,9 +152,12 @@ const Register = () => {
           I have read the <a href="">agreement</a>
         </Checkbox>
       </Form.Item>
-      <Form.Item {...tailFormItemLayout}>
-        <Button type="primary" htmlType="submit" style={{ margin: '0 auto' }}>
+      <Form.Item>
+        <Button type="primary" htmlType="submit" style={{ width: '100%', margin: '0 auto' }}>
           注册
+        </Button>
+        <Button type="link" onClick={toLogin} style={{ width: '100%', margin: '0 auto' }}>
+          点击去登录
         </Button>
       </Form.Item>
     </Form>

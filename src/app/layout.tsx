@@ -1,14 +1,5 @@
-import dynamic from 'next/dynamic';
 import { Inter } from 'next/font/google';
 import './globals.css';
-// import RootLayout from './rootLayout';
-
-const RootLayout = dynamic(
-  () => {
-    return import('./rootLayout');
-  },
-  { ssr: false }
-);
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,9 +11,7 @@ export const metadata = {
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <RootLayout>{children}</RootLayout>
-      </body>
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }
