@@ -1,0 +1,26 @@
+diff --git a/lib/animate/timeline.js b/lib/animate/timeline.js
+index aa10bbaa081d7208527c05242312ed5f1d858f0d..f47bb7836f5b68c9b4cf2557ce6b752c7030acfa 100644
+--- a/lib/animate/timeline.js
++++ b/lib/animate/timeline.js
+@@ -2,7 +2,7 @@
+ Object.defineProperty(exports, "__esModule", { value: true });
+ var util_1 = require("@antv/util");
+ var d3Timer = require("d3-timer");
+-var d3_interpolate_1 = require("d3-interpolate"); // 目前整体动画只需要数值和数组的差值计算
++var d3_interpolate_1 = await import("d3-interpolate"); // 目前整体动画只需要数值和数组的差值计算
+ var register_1 = require("./register");
+ var PathUtil = require("../util/path");
+ var color_1 = require("../util/color");
+diff --git a/package.json b/package.json
+index 4b9bb157bfbbde3452586f93131c1da3cc7a5086..577a286d3b25e1b00cc9a10e4af6c42332c152cd 100644
+--- a/package.json
++++ b/package.json
+@@ -2,7 +2,7 @@
+   "name": "@antv/g-base",
+   "version": "0.5.15",
+   "description": "A common util collection for antv projects",
+-  "main": "lib/index.js",
++  "main": "esm/index.js",
+   "module": "esm/index.js",
+   "types": "lib/index.d.ts",
+   "files": [

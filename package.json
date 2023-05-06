@@ -5,6 +5,7 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
+    "dev:turbo": "next dev --turbo",
     "lint": "next lint",
     "prepare": "simple-git-hooks",
     "start": "next start"
@@ -19,9 +20,13 @@
     ]
   },
   "dependencies": {
-    "@emotion/css": "^11.10.6",
-    "@ant-design/pro-components": "^2.4.9",
     "@ant-design/icons": "^5.0.1",
+    "@ant-design/plots": "^1.2.5",
+    "@ant-design/pro-components": "^2.4.9",
+    "@antv/g-base": "^0.5.15",
+    "@antv/g2": "^4.2.10",
+    "@antv/g2plot": "^2.4.30",
+    "@emotion/css": "^11.10.6",
     "@types/node": "18.15.13",
     "@types/react": "18.0.38",
     "@types/react-dom": "18.0.11",
@@ -41,5 +46,11 @@
     "postcss": "^8.4.23",
     "simple-git-hooks": "^2.8.1",
     "tailwindcss": "^3.3.1"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "@antv/g-base@0.5.15": "patches/@antv__g-base@0.5.15.patch",
+      "@antv/path-util@3.0.1": "patches/@antv__path-util@3.0.1.patch"
+    }
   }
 }

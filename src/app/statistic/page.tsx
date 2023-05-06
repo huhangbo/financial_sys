@@ -1,6 +1,5 @@
-'use client';
-import { Button } from 'antd';
+import { redirect } from 'next/navigation';
 
-export default function hello() {
-  return <Button>11231</Button>;
+export default function Home() {
+  redirect('/statistic/year');
 }

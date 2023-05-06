@@ -1,0 +1,13 @@
+diff --git a/package.json b/package.json
+index e431c5f955402ba91a1a856d5c9fe5594f4689b8..f26a54f2d9d3f189172a76678ed33e74b38570c0 100644
+--- a/package.json
++++ b/package.json
+@@ -2,7 +2,7 @@
+   "name": "@antv/path-util",
+   "version": "3.0.1",
+   "description": "A common util collection for antv projects",
+-  "main": "lib/index.js",
++  "main": "esm/index.js",
+   "types": "lib/index.d.ts",
+   "module": "esm/index.js",
+   "files": [
