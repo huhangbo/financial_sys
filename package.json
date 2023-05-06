@@ -27,6 +27,7 @@
     "@antv/g2": "^4.2.10",
     "@antv/g2plot": "^2.4.30",
     "@emotion/css": "^11.10.6",
+    "@pie-framework/material-ui-calculator": "^3.1.5",
     "@types/node": "18.15.13",
     "@types/react": "18.0.38",
     "@types/react-dom": "18.0.11",

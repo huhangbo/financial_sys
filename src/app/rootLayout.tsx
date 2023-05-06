@@ -1,5 +1,4 @@
 'use client';
-
 import {
   CalculatorFilled,
   CaretDownFilled,
@@ -19,7 +18,9 @@ import {
 import type { ProSettings } from '@ant-design/pro-components';
 import { ProConfigProvider, ProLayout } from '@ant-design/pro-components';
 import { css } from '@emotion/css';
-import { Divider, Dropdown, Input, Popover, theme } from 'antd';
+// @ts-expect-error too old to have types
+import Calculator from '@pie-framework/material-ui-calculator';
+import { Button, Divider, Dropdown, Input, Popover, theme } from 'antd';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
@@ -261,6 +262,10 @@ const Component = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
   const { push } = useRouter();
   const [num, setNum] = useState(40);
+
+  // calculator
+  const [clicked, setClicked] = useState(false);
+
   return (
     <div
       id="test-pro-layout"
@@ -350,11 +355,6 @@ const Component = ({ children }: { children: React.ReactNode }) => {
                 icon: <EditFilled />
               },
               {
-                path: '/calculator',
-                name: '计算器',
-                icon: <CalculatorFilled />
-              },
-              {
                 path: '/news',
                 name: '新闻',
                 icon: <NotificationFilled />
@@ -374,25 +374,40 @@ const Component = ({ children }: { children: React.ReactNode }) => {
             title: '七妮妮',
             render: (props, dom) => {
               return (
-                <Dropdown
-                  menu={{
-                    items: [
-                      {
-                        key: 'userinfo',
-                        icon: <UserOutlined />,
-                        label: '个人信息',
-                        onClick: () => push('/user')
-                      },
-                      {
-                        key: 'logout',
-                        icon: <LogoutOutlined />,
-                        label: '退出登录'
-                      }
-                    ]
-                  }}
-                >
-                  {dom}
-                </Dropdown>
+                <>
+                  <Popover
+                    trigger="click"
+                    open={clicked}
+                    onOpenChange={(v) => setClicked(v)}
+                    content={<Calculator mode="basic" />}
+                  >
+                    <>
+                      <Button>
+                        <CalculatorFilled />
+                        <span>计算器</span>
+                      </Button>
+                    </>
+                  </Popover>
+                  <Dropdown
+                    menu={{
+                      items: [
+                        {
+                          key: 'userinfo',
+                          icon: <UserOutlined />,
+                          label: '个人信息',
+                          onClick: () => push('/user')
+                        },
+                        {
+                          key: 'logout',
+                          icon: <LogoutOutlined />,
+                          label: '退出登录'
+                        }
+                      ]
+                    }}
+                  >
+                    {dom}
+                  </Dropdown>
+                </>
               );
             }
           }}
