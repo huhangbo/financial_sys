@@ -1,95 +1,140 @@
+// @ts-nocheck
 'use client';
-import { Button, List, Skeleton } from 'antd';
+import { Button, Form, Input, Modal, Radio, Space, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { ProList } from '@ant-design/pro-components';
+import {request} from "@/utils/request";
 
-interface DataType {
-  gender?: string;
-  name: {
-    title?: string;
-    first?: string;
-    last?: string;
-  };
-  email?: string;
-  picture: {
-    large?: string;
-    medium?: string;
-    thumbnail?: string;
-  };
-  nat?: string;
-  loading: boolean;
+
+interface Notes {
+  notes_id?: number;
+  user_id?: number;
+  title?: string;
+  detail?: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
-const count = 3;
-const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat,picture&noinfo`;
-
-const App: React.FC = () => {
-  const [initLoading, setInitLoading] = useState(true);
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState<DataType[]>([]);
-  const [list, setList] = useState<DataType[]>([]);
-
-  useEffect(() => {
-    fetch(fakeDataUrl)
-      .then((res) => res.json())
-      .then((res) => {
-        setInitLoading(false);
-        setData(res.results);
-        setList(res.results);
-      });
-  }, []);
-
-  const onLoadMore = () => {
-    setLoading(true);
-    setList(data.concat([...new Array(count)].map(() => ({ loading: true, name: {}, picture: {} }))));
-    fetch(fakeDataUrl)
-      .then((res) => res.json())
-      .then((res) => {
-        const newData = data.concat(res.results);
-        setData(newData);
-        setList(newData);
-        setLoading(false);
-        // Resetting window's offsetTop so as to display react-virtualized demo underfloor.
-        // In real scene, you can using public method of react-virtualized:
-        // https://stackoverflow.com/questions/46700726/how-to-use-public-method-updateposition-of-react-virtualized
-        window.dispatchEvent(new Event('resize'));
-      });
-  };
-
-  const loadMore =
-    !initLoading && !loading ? (
-      <div
-        style={{
-          textAlign: 'center',
-          marginTop: 12,
-          height: 32,
-          lineHeight: '32px'
-        }}
-      >
-        <Button onClick={onLoadMore}>loading more</Button>
-      </div>
-    ) : null;
+const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({open, onCreate, onCancel,}) => {
+  const [form] = Form.useForm();
 
   return (
-    <List
-      className="demo-loadmore-list"
-      loading={initLoading}
-      itemLayout="horizontal"
-      loadMore={loadMore}
-      dataSource={list}
-      renderItem={(item) => (
-        <List.Item actions={[<a key="list-loadmore-edit">edit</a>, <a key="list-loadmore-more">more</a>]}>
-          <Skeleton avatar title={false} loading={item.loading} active>
-            <List.Item.Meta
-              // avatar={<Avatar src={item.picture.large} />}
-              title={<a href="https://ant.design">{'不要忘记了 6.10 还信用款'}</a>}
-              description="记录时间: 2023-01-05"
-            />
-            <div>content</div>
-          </Skeleton>
-        </List.Item>
-      )}
-    />
+    <Modal
+      open={open}
+      title="新建备忘录"
+      okText="提交"
+      cancelText="取消"
+      onCancel={onCancel}
+      onOk={() => {
+        form
+          .validateFields()
+          .then((values) => {
+            form.resetFields();
+            onCreate(values);
+            let res = request("post", "notes/add", values)
+          })
+          .catch((info) => {
+            console.log('Validate Failed:', info);
+          });
+      }}
+    >
+      <Form
+        form={form}
+        layout="vertical"
+        name="form_in_modal"
+        initialValues={{ modifier: 'public' }}
+      >
+        <Form.Item name="title" label="标题"
+          rules={[{ required: true, message: 'Please input the title of collection!' }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item name="detail" label="正文"
+          rules={[{ required: true, message: 'Please input the detail of collection!' }]}
+        >
+          <Input type="textarea" />
+        </Form.Item>
+      </Form>
+    </Modal>
   );
 };
 
-export default App;
+
+export default function Notes () {
+  const [list, setList] = useState<Notes[]>([]);
+  const [open, setOpen] = useState(false);
+
+  const onCreate = (values: any) => {
+    console.log('Received values of form: ', values);
+    setOpen(false);
+  };
+  useEffect( () => {
+    let res = request("get", "notes/list")
+    res.then( data => {
+      console.log(data)
+      setList(data.notes_list);
+    })
+  }, []);
+  return (
+    <ProList <Notes>
+      rowKey="notes_id"
+      headerTitle="备忘录"
+      dataSource={list}
+      showActions="hover"
+      toolBarRender={() => {
+        return [
+          <Button key="button" type="primary" onClick={() => setOpen(true)}>
+            新建
+          </Button>,
+          <CollectionCreateForm
+            key = "form"
+            open={open}
+            onCreate={onCreate}
+            onCancel={() => {
+              setOpen(false);
+            }}
+          />
+        ];
+      }}
+      editable={{
+        onSave: async (key, record, originRow) => {
+          let res = request("post", "notes/update", record)
+          return true;
+          },
+        onDelete: async (key, record) => {
+          let res = request("post", "notes/delete", [key])
+          return true
+        }
+      }}
+      onDataSourceChange={setList}
+      metas={{
+        title: {
+          dataIndex: 'title',
+        },
+        description: {
+          dataIndex: 'detail',
+        },
+        subTitle: {
+          render: () => {
+            return (
+              <Space size={0}>
+                <Tag color="blue">Ant Design</Tag>
+              </Space>
+            );
+            },
+        },
+        actions: {
+          render: (text, row, index, action) => [
+            <a onClick={() => {
+                action?.startEditable(row.notes_id);
+              }}
+               key="link"
+            >
+              编辑
+            </a>,
+          ],
+        },
+      }}
+    />
+  );
+};

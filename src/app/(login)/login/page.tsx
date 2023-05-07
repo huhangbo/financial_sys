@@ -1,16 +1,39 @@
 'use client';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Switch } from 'antd';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import {request} from "@/utils/request";
+import {useCookieEntry} from '@/utils/cookie'
 
 const Login = () => {
-  const { replace } = useRouter();
-  const [username, setUsername] = useState('');
+  const { replace, push, refresh } = useRouter();
+  const [telephone, setTelephone] = useState('');
   const [password, setPassword] = useState('');
+  const [token, setToken] = useCookieEntry('token', "")
+  const [user, setUser] = useCookieEntry('user', {})
+  const [isAdmin, setIsAdmin] = useState(false)
 
   const onFinish = (values: any) => {
-    console.log('Success:', values);
+    values.telephone =  parseInt(values.telephone)
+    if (isAdmin) {
+      let res =  request("post", "/admin/login", values)
+      res.then(data => {
+        setToken(data.token)
+        push('/admin/user')
+      }).catch(err => {
+        replace('/login')
+      })
+    } else {
+      let res =  request("post", "/user/login", values)
+      res.then(data => {
+        setToken(data.token)
+        setUser(data.user)
+        push('/note')
+      }).catch(err => {
+        replace('/login')
+      })
+    }
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -18,7 +41,7 @@ const Login = () => {
   };
 
   const handleUsernameChange = (e: any) => {
-    setUsername(e.target.value);
+    setTelephone(e.target.value);
   };
 
   const handlePasswordChange = (e: any) => {
@@ -26,7 +49,7 @@ const Login = () => {
   };
 
   const toRegister = () => {
-    replace('/register');
+   push('/register');
   };
 
   return (
@@ -37,10 +60,10 @@ const Login = () => {
       onFinishFailed={onFinishFailed}
       style={{ maxWidth: 600, width: '75%', margin: '0 auto' }}
     >
-      <Form.Item label="用户" name="username" rules={[{ required: true, message: '用户名不能为空' }]}>
+      <Form.Item label="电话" name="telephone" rules={[{ required: true, message: '电话不能为空' }]}>
         <Input
           prefix={<UserOutlined className="site-form-item-icon" />}
-          value={username}
+          value={telephone}
           onChange={handleUsernameChange}
         />
       </Form.Item>
@@ -65,6 +88,11 @@ const Login = () => {
         <Button type="link" onClick={toRegister} style={{ width: '100%', margin: '0 auto' }}>
           点击去注册
         </Button>
+      </Form.Item>
+      <Form.Item valuePropName="isAdmin">
+        <Switch checkedChildren="管理员" unCheckedChildren="用户" defaultChecked={false} onChange={ (checked, event) => {
+          setIsAdmin(checked)
+        } } />
       </Form.Item>
     </Form>
   );

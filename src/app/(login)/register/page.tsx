@@ -1,6 +1,8 @@
 'use client';
-import { Button, Checkbox, Form, Input, Select } from 'antd';
+import { Button, Checkbox, Form, Input, Select, Modal } from 'antd';
 import { useRouter } from 'next/navigation';
+import {useState} from "react";
+import {request} from "@/utils/request";
 
 const { Option } = Select;
 
@@ -36,9 +38,31 @@ const tailFormItemLayout = {
 
 const Register = () => {
   const [form] = Form.useForm();
-  const { replace } = useRouter();
+  const { replace, push } = useRouter();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+    toLogin()
+  };
+
   const onFinish = (values: any) => {
     console.log('Received values of form: ', values);
+    let reqBody = {
+      "username": values.username,
+      "gender": values.gender,
+      "email": values.email,
+      "telephone": parseInt(values.telephone),
+      "password": values.password
+    }
+    let res = request('post', 'user/register', reqBody)
+    res.then(data => {
+      showModal()
+    })
   };
   const toLogin = () => {
     replace('/login');
@@ -64,10 +88,10 @@ const Register = () => {
       scrollToFirstError
     >
       <Form.Item
-        name="nickname"
+        name="username"
         label="用户名"
         tooltip="输入用户名用于标识登录"
-        rules={[{ required: true, message: 'Please input your nickname!', whitespace: true }]}
+        rules={[{ required: true, message: 'Please input your username!', whitespace: true }]}
       >
         <Input />
       </Form.Item>
@@ -109,7 +133,7 @@ const Register = () => {
         <Input.Password />
       </Form.Item>
 
-      <Form.Item name="phone" label="电话" rules={[{ required: true, message: '请输入电话' }]}>
+      <Form.Item name="telephone" label="电话" rules={[{ required: true, message: '请输入电话' }]}>
         <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
       </Form.Item>
 
@@ -132,26 +156,11 @@ const Register = () => {
 
       <Form.Item name="gender" label="性别" rules={[{ required: true, message: '请选择性别' }]}>
         <Select placeholder="select your gender">
-          <Option value="male">男</Option>
-          <Option value="female">女</Option>
+          <Option value={1}>男</Option>
+          <Option value={2}>女</Option>
         </Select>
       </Form.Item>
 
-      <Form.Item
-        name="agreement"
-        valuePropName="checked"
-        rules={[
-          {
-            validator: (_, value) =>
-              value ? Promise.resolve() : Promise.reject(new Error('Should accept agreement'))
-          }
-        ]}
-        {...tailFormItemLayout}
-      >
-        <Checkbox>
-          I have read the <a href="">agreement</a>
-        </Checkbox>
-      </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit" style={{ width: '100%', margin: '0 auto' }}>
           注册
@@ -160,6 +169,9 @@ const Register = () => {
           点击去登录
         </Button>
       </Form.Item>
+      <Modal title="成功" open={isModalOpen} onOk={handleOk}>
+        <p>注册成功，点击前去登录</p>
+      </Modal>
     </Form>
   );
 };

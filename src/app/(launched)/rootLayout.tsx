@@ -260,8 +260,7 @@ const Component = ({ children }: { children: React.ReactNode }) => {
     splitMenus: true
   });
   const pathname = usePathname();
-  const { push } = useRouter();
-  const [num, setNum] = useState(40);
+  const { push, replace } = useRouter();
 
   // calculator
   const [clicked, setClicked] = useState(false);
@@ -275,7 +274,7 @@ const Component = ({ children }: { children: React.ReactNode }) => {
     >
       <ProConfigProvider hashed={false}>
         <ProLayout
-          title="财富管理系统"
+          title="财务管理系统"
           logo="https://gw.alipayobjects.com/mdn/rms_b5fcc5/afts/img/A*1NHAQYduQiQAAAAAAAAAAABkARQnAQ"
           prefixCls="my-prefix"
           bgLayoutImgList={[
@@ -342,11 +341,6 @@ const Component = ({ children }: { children: React.ReactNode }) => {
                 ]
               },
               {
-                name: '财务分析',
-                icon: <SignalFilled />,
-                path: '/analysis'
-              },
-              {
                 path: '/budget',
                 name: '财务预算',
                 icon: <PayCircleFilled />
@@ -406,7 +400,8 @@ const Component = ({ children }: { children: React.ReactNode }) => {
                         {
                           key: 'logout',
                           icon: <LogoutOutlined />,
-                          label: '退出登录'
+                          label: '退出登录',
+                          onClick: () => replace('/login')
                         }
                       ]
                     }}
@@ -417,15 +412,7 @@ const Component = ({ children }: { children: React.ReactNode }) => {
               );
             }
           }}
-          // actionsRender={(props) => {
-          //   if (props.isMobile) return [];
-          //   return [
-          //     props.layout !== 'side' && document.body.clientWidth > 1400 ? <SearchInput /> : undefined,
-          //     <InfoCircleFilled key="InfoCircleFilled" />,
-          //     <QuestionCircleFilled key="QuestionCircleFilled" />,
-          //     <GithubFilled key="GithubFilled" />
-          //   ];
-          // }}
+
           headerTitleRender={(logo, title, _) => {
             const defaultDom = (
               <a>
@@ -441,7 +428,6 @@ const Component = ({ children }: { children: React.ReactNode }) => {
           }}
           onMenuHeaderClick={(e) => console.log(e)}
           menuItemRender={(item, dom) => {
-            console.log(item);
             return (
               <div
                 onClick={() => {
