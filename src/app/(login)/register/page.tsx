@@ -23,19 +23,6 @@ const formItemLayout = {
   }
 };
 
-const tailFormItemLayout = {
-  wrapperCol: {
-    xs: {
-      span: 24,
-      offset: 0
-    },
-    sm: {
-      span: 16,
-      offset: 8
-    }
-  }
-};
-
 const Register = () => {
   const [form] = Form.useForm();
   const { replace, push } = useRouter();
@@ -83,13 +70,12 @@ const Register = () => {
       name="register"
       title="用户注册"
       onFinish={onFinish}
-      initialValues={{ prefix: '86' }}
       style={{ width: '75%', maxWidth: 600, margin: '0 auto' }}
       scrollToFirstError
     >
       <Form.Item
         name="username"
-        label="用户名"
+        label="名称"
         tooltip="输入用户名用于标识登录"
         rules={[{ required: true, message: 'Please input your username!', whitespace: true }]}
       >

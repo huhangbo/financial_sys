@@ -32,7 +32,7 @@ const AdminUser: React.FC<any> = ({open, onCreate, onCancel, info, isAdd, list, 
             onCreate(values);
             console.log(values)
             if (!isAdd) {
-              let res = request("post", "/user/update/info", values)
+              let res = request("post", "user/update/info", values)
               res.then(data => {
                 let newList :any = []
                 list.map((item:any) => {
@@ -76,7 +76,7 @@ const AdminUser: React.FC<any> = ({open, onCreate, onCancel, info, isAdd, list, 
         >
           <Input disabled={true}/>
         </Form.Item>
-        <Form.Item name="username" label="用户名"
+        <Form.Item name="username" label="名称"
                    rules={[{ required: true, message: 'Please input the title of collection!' }]}
         >
           <Input/>

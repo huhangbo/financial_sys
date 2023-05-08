@@ -4,7 +4,8 @@ import {Radio, Tabs, Table, Button, Form, Modal, Input, InputNumber, Select, Dat
 import {CrownFilled, DollarOutlined} from '@ant-design/icons'
 import {request} from "@/utils/request";
 import dayjs from "dayjs";
-import {useRouter} from "next/navigation";
+import 'dayjs/locale/zh-cn';
+import locale from 'antd/es/date-picker/locale/zh_CN';
 
 
 const { Option } = Select;
@@ -205,7 +206,7 @@ const List: React.FC<any>= ({categoryMap}) => {
           } else {
             setSelectTime({'year': date.year(), 'month': date.month()})
           }
-        }} picker="month" />
+        }} picker="month" locale={locale}/>
         <Button type='default' style={{ marginLeft: 30 }}
                 onClick={() => {
                   let res = request('post', 'bill/list', selectTime)
@@ -236,15 +237,7 @@ const List: React.FC<any>= ({categoryMap}) => {
 
 const Submit: React.FC<any>= ({categoryMap}) => {
   const [form] = Form.useForm();
-  const { replace, push } = useRouter();
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [billType, setBillType] = useState(1)
-
-
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-
   const onFinish = (values: any) => {
     console.log('Received values of form: ', values);
     let reqBody = {

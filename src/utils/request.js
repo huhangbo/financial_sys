@@ -2,7 +2,6 @@ import axios from "axios"
 import cookie from 'react-cookies';
 
 axios.defaults.baseURL = "http://127.0.0.1:8888"
-// const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjEyMywiZXhwIjoxNjg0MDAwNTUyLCJpc3MiOiJmbHlpbmcifQ.Y8kdnWClCzbwiHI0mE_qrjrLvleb5qKkiv5foVWRoxk"
 export function request (method, url, data) {
     return new Promise((resolve, reject) => {
         let token = cookie.load("token")
