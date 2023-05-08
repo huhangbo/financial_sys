@@ -20,7 +20,7 @@ const Login = () => {
       let res =  request("post", "/admin/login", values)
       res.then(data => {
         setToken(data.token)
-        push('/admin/user')
+        push('/admin')
       }).catch(err => {
         replace('/login')
       })
@@ -58,7 +58,7 @@ const Login = () => {
       name="basic"
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
-      style={{ maxWidth: 600, width: '75%', margin: '0 auto' }}
+      style={{ maxWidth: 800, width: '75%', margin: '0 auto' }}
     >
       <Form.Item label="电话" name="telephone" rules={[{ required: true, message: '电话不能为空' }]}>
         <Input

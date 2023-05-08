@@ -304,23 +304,7 @@ const Component = ({ children }: { children: React.ReactNode }) => {
                 path: '/management',
                 name: '财务管理',
                 icon: <MoneyCollectFilled />,
-                routes: [
-                  {
-                    path: '/management/detail',
-                    name: '收入明细',
-                    icon: 'https://gw.alipayobjects.com/zos/antfincdn/upvrAjAPQX/Logo_Tech%252520UI.svg'
-                  },
-                  {
-                    path: '/management/income',
-                    name: '收入记账',
-                    icon: <CrownFilled />
-                  },
-                  {
-                    path: '/management/expend',
-                    name: '支出记账',
-                    icon: <CrownFilled />
-                  }
-                ]
+                routes: []
               },
               {
                 path: '/statistic',

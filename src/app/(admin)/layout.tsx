@@ -49,26 +49,7 @@ const Component = ({ children }: { children: React.ReactNode }) => {
     width: '331px'
   }
 ]}
-  route={{
-    path: '/',
-      routes: [
-      {
-        path: '/userAdmin',
-        name: '用户管理',
-        icon: <MoneyCollectFilled />,
-      },
-      {
-        path: '/category',
-        name: '分类管理',
-        icon: <ProjectFilled />,
-      },
-      {
-        path: '/newsAdmin',
-        name: '新闻管理',
-        icon: <NotificationFilled />
-      }
-    ]
-  }}
+  route={[]}
   location={{
     pathname
   }}
@@ -79,7 +60,7 @@ const Component = ({ children }: { children: React.ReactNode }) => {
   avatarProps={{
     src: 'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
       size: 'small',
-      title: '七妮妮',
+      title: 'Admin',
       render: (props, dom) => {
       return (
         <>
