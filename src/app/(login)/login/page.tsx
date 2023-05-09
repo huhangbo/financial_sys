@@ -29,7 +29,7 @@ const Login = () => {
       res.then(data => {
         setToken(data.token)
         setUser(data.user)
-        push('/note')
+        push('/management')
       }).catch(err => {
         replace('/login')
       })
@@ -80,7 +80,6 @@ const Login = () => {
         <Button
           type="primary"
           htmlType="submit"
-          onClick={() => replace('/management/detail')}
           style={{ width: '100%', margin: '0 auto' }}
         >
           登录
