@@ -1,6 +1,6 @@
 'use client';
 import React, {useEffect, useState} from 'react';
-import {Radio, Tabs, Table, Button, Form, Modal, Input, InputNumber, Select, DatePicker, Space } from 'antd';
+import {Radio, Tabs, Table, Button, Form, Modal, Input, InputNumber, Select, DatePicker } from 'antd';
 import {CrownFilled, DollarOutlined} from '@ant-design/icons'
 import {request} from "@/utils/request";
 import dayjs from "dayjs";
@@ -140,7 +140,7 @@ const List: React.FC<any>= ({categoryMap}) => {
       render: (_: any, record: any) => {
         let tmpData = new Date(record.created_at)
         return (
-          <div> {tmpData.toLocaleDateString()} </div>
+          <div> {record.year.toString()+'/'+(record.month+1).toString()+'/'+record.day.toString()} </div>
         )
       }
     },
@@ -172,7 +172,7 @@ const List: React.FC<any>= ({categoryMap}) => {
     res.then(data => {
       setList(data)
     })
-  }, [])
+  }, [selectTime])
 
   const deleteItem = () => {
     let res = request('post', 'bill/delete', selectedRowKeys)
@@ -246,7 +246,8 @@ const Submit: React.FC<any>= ({categoryMap}) => {
       'fee': parseInt(String(values.fee * 100)),
       'remark': values.remark,
       'month': values.time.month(),
-      'year': values.time.year()
+      'year': values.time.year(),
+      'day': values.time.day()
     }
     let res = request('post', 'bill/add', reqBody)
     res.then(data => {

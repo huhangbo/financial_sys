@@ -53,47 +53,50 @@ const Login = () => {
   };
 
   return (
-    <Form
-      title="用户登录"
-      name="basic"
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-      style={{ maxWidth: 800, width: '75%', margin: '0 auto' }}
-    >
-      <Form.Item label="电话" name="telephone" rules={[{ required: true, message: '电话不能为空' }]}>
-        <Input
-          prefix={<UserOutlined className="site-form-item-icon" />}
-          value={telephone}
-          onChange={handleUsernameChange}
-        />
-      </Form.Item>
+    <div style={{ maxWidth: 800, width: '75%', margin: '0 auto', paddingTop: 25}}>
+      <center>登录</center>
+      <Form
+        title="用户登录"
+        name="basic"
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        style={{ marginTop: 25}}
+      >
+        <Form.Item label="电话" name="telephone" rules={[{ required: true, message: '电话不能为空' }]}>
+          <Input
+            prefix={<UserOutlined className="site-form-item-icon" />}
+            value={telephone}
+            onChange={handleUsernameChange}
+          />
+        </Form.Item>
 
-      <Form.Item label="密码" name="password" rules={[{ required: true, message: '密码不能为空' }]}>
-        <Input.Password
-          prefix={<LockOutlined className="site-form-item-icon" />}
-          value={password}
-          onChange={handlePasswordChange}
-        />
-      </Form.Item>
+        <Form.Item label="密码" name="password" rules={[{ required: true, message: '密码不能为空' }]}>
+          <Input.Password
+            prefix={<LockOutlined className="site-form-item-icon" />}
+            value={password}
+            onChange={handlePasswordChange}
+          />
+        </Form.Item>
 
-      <Form.Item>
-        <Button
-          type="primary"
-          htmlType="submit"
-          style={{ width: '100%', margin: '0 auto' }}
-        >
-          登录
-        </Button>
-        <Button type="link" onClick={toRegister} style={{ width: '100%', margin: '0 auto' }}>
-          点击去注册
-        </Button>
-      </Form.Item>
-      <Form.Item valuePropName="isAdmin">
-        <Switch checkedChildren="管理员" unCheckedChildren="用户" defaultChecked={false} onChange={ (checked, event) => {
-          setIsAdmin(checked)
-        } } />
-      </Form.Item>
-    </Form>
+        <Form.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+            style={{ width: '100%', margin: '0 auto' }}
+          >
+            登录
+          </Button>
+          <Button type="link" onClick={toRegister} style={{ width: '100%', margin: '0 auto' }}>
+            点击去注册
+          </Button>
+        </Form.Item>
+        <Form.Item valuePropName="isAdmin">
+          <Switch checkedChildren="管理员" unCheckedChildren="用户" defaultChecked={false} onChange={ (checked, event) => {
+            setIsAdmin(checked)
+          } } />
+        </Form.Item>
+      </Form>
+    </div>
   );
 };
 

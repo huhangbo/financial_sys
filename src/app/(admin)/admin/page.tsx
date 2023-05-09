@@ -9,6 +9,7 @@ type TabPosition = 'left' | 'right' | 'top' | 'bottom';
 const tabList = ["用户管理", "分类管理", "新闻管理"]
 
 const { Option } = Select;
+const { TextArea } = Input;
 
 
 const AdminUser: React.FC<any> = ({open, onCreate, onCancel, info, isAdd, list, setList}) => {
@@ -238,18 +239,17 @@ const AdminNews: React.FC<any> = ({open, onCreate, onCancel, info, isAdd, list, 
               res.then(data => {
                 let newList :any = []
                 list.map((item:any) => {
-                  if (item.user_id === values.user_id) {
-                    item.username = values.username
-                    item.gender = values.gender
-                    item.email = values.email
+                  if (item.news_id === values.news_id) {
+                    item.title = values.title
+                    item.detail = values.detail
+                    item.source = values.source
                   }
                   newList.push(item)
                 })
                 setList(newList)
               })
             } else {
-              values.telephone = parseInt(values.telephone)
-              values.user_id = null
+              values.news_id = null
               let res = request("post", "news/add", values)
               res.then(data => {
                 let newList :any = []
@@ -285,15 +285,12 @@ const AdminNews: React.FC<any> = ({open, onCreate, onCancel, info, isAdd, list, 
         <Form.Item name="detail" label="正文"
                    rules={[{ required: true, message: 'Please input the detail of collection!' }]}
         >
-          <Input type="textarea" disabled={!isAdd} />
+          <TextArea rows={4}/>
         </Form.Item>
         <Form.Item name="source" label="来源"
                    rules={[{ required: true, message: 'Please input the detail of collection!' }]}
         >
-          <Input type="textarea" disabled={!isAdd} />
-        </Form.Item>
-        <Form.Item name="creatd_at" label="时间">
-          <Input type="textarea" disabled={true} />
+          <Input type="textarea" />
         </Form.Item>
       </Form>
     </Modal>
@@ -418,23 +415,20 @@ const AdminCategory: React.FC<any> = ({open, onCreate, onCancel, info, isAdd, li
             onCreate(values);
             console.log(values)
             if (!isAdd) {
-              let res = request("post", "news/update", values)
+              let res = request("post", "category/update", values)
               res.then(data => {
                 let newList :any = []
                 list.map((item:any) => {
-                  if (item.user_id === values.user_id) {
-                    item.username = values.username
-                    item.gender = values.gender
-                    item.email = values.email
+                  if (item.category_id === values.category_id) {
+                    item.category_detail = values.category_detail
                   }
                   newList.push(item)
                 })
                 setList(newList)
               })
             } else {
-              values.telephone = parseInt(values.telephone)
-              values.user_id = null
-              let res = request("post", "news/add", values)
+              values.category_id = null
+              let res = request("post", "category/add", values)
               res.then(data => {
                 let newList :any = []
                 list.map((item:any) => {
@@ -461,26 +455,18 @@ const AdminCategory: React.FC<any> = ({open, onCreate, onCancel, info, isAdd, li
         >
           <Input disabled={true}/>
         </Form.Item>
-        <Form.Item name="title" label="标题"
-                   rules={[{ required: true, message: 'Please input the title of collection!' }]}
-        >
-          <Input/>
-        </Form.Item>
         <Form.Item name="category_detail" label="内容"
                    rules={[{ required: true, message: 'Please input the detail of collection!' }]}
         >
-          <Input type="textarea" disabled={!isAdd} />
+          <Input type="textarea" />
         </Form.Item>
         <Form.Item name="bill_type" label="类型"
                    rules={[{ required: true, message: 'Please input the detail of collection!' }]}
         >
-          <Select placeholder="选择账单类型">
+          <Select placeholder="选择账单类型" disabled={!isAdd}>
             <Option value={1}>支出</Option>
             <Option value={2}>收入</Option>
           </Select>
-        </Form.Item>
-        <Form.Item name="creatd_at" label="时间">
-          <Input type="textarea" disabled={true} />
         </Form.Item>
       </Form>
     </Modal>

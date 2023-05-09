@@ -1,11 +1,11 @@
 // @ts-nocheck
 'use client';
-import { Button, Form, Input, Modal, Radio, Space, Tag } from 'antd';
+import { Button, Form, Input, Modal, Space, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { ProList } from '@ant-design/pro-components';
 import {request} from "@/utils/request";
 
-
+const { TextArea } = Input;
 interface Notes {
   notes_id?: number;
   user_id?: number;
@@ -52,7 +52,7 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({open, onCrea
         <Form.Item name="detail" label="正文"
           rules={[{ required: true, message: 'Please input the detail of collection!' }]}
         >
-          <Input type="textarea" />
+          <TextArea rows={4}/>
         </Form.Item>
       </Form>
     </Modal>
