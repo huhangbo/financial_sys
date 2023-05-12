@@ -602,8 +602,8 @@ const Category: React.FC = () => {
     });
   }, []);
 
-  const deleteUser = () => {
-    let res = request('post', 'news/delete', selectedRowKeys);
+  const deleteCategory = () => {
+    let res = request('post', 'category/delete', selectedRowKeys);
     res.then((data) => {
       let newList: any = [];
       list.map((item: any) => {
@@ -631,7 +631,7 @@ const Category: React.FC = () => {
         <Button
           type="primary"
           danger
-          onClick={deleteUser}
+          onClick={deleteCategory}
           disabled={!hasSelected}
           style={{ marginRight: 10 }}
         >
