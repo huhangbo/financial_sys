@@ -396,7 +396,7 @@ const News: React.FC = () => {
     });
   }, []);
 
-  const deleteUser = () => {
+  const deleteNews = () => {
     let res = request('post', 'news/delete', selectedRowKeys);
     res.then((data) => {
       let newList: any = [];
@@ -425,7 +425,7 @@ const News: React.FC = () => {
         <Button
           type="primary"
           danger
-          onClick={deleteUser}
+          onClick={deleteNews}
           disabled={!hasSelected}
           style={{ marginRight: 10 }}
         >
