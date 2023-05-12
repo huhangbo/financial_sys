@@ -49,10 +49,11 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({open, onCrea
         >
           <Input />
         </Form.Item>
-        <Form.Item name="detail" label="正文"
-          rules={[{ required: true, message: 'Please input the detail of collection!' }]}
-        >
+        <Form.Item name="detail" label="正文" rules={[{ required: true, message: 'Please input the detail of collection!' }]}>
           <TextArea rows={4}/>
+        </Form.Item>
+        <Form.Item name="place" label="地点" rules={[{ required: true, message: 'Please input the title of collection!' }]}>
+          <Input/>
         </Form.Item>
       </Form>
     </Modal>
