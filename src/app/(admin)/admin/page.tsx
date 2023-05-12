@@ -575,7 +575,7 @@ const Category: React.FC = () => {
     {
       title: '操作',
       dataIndex: '',
-      key: 'news_id',
+      key: 'category_id',
       render: (_: any, record: any) => {
         return (
           <div>
