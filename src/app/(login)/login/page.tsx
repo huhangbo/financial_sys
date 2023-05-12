@@ -3,36 +3,40 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Switch } from 'antd';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import {request} from "@/utils/request";
-import {useCookieEntry} from '@/utils/cookie'
+import { request } from '@/utils/request';
+import { useCookieEntry } from '@/utils/cookie';
 
 const Login = () => {
   const { replace, push, refresh } = useRouter();
   const [telephone, setTelephone] = useState('');
   const [password, setPassword] = useState('');
-  const [token, setToken] = useCookieEntry('token', "")
-  const [user, setUser] = useCookieEntry('user', {})
-  const [isAdmin, setIsAdmin] = useState(false)
+  const [token, setToken] = useCookieEntry('token', '');
+  const [user, setUser] = useCookieEntry('user', {});
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const onFinish = (values: any) => {
-    values.telephone =  parseInt(values.telephone)
+    values.telephone = parseInt(values.telephone);
     if (isAdmin) {
-      let res =  request("post", "/admin/login", values)
-      res.then(data => {
-        setToken(data.token)
-        push('/admin')
-      }).catch(err => {
-        replace('/login')
-      })
+      let res = request('post', '/admin/login', values);
+      res
+        .then((data) => {
+          setToken(data.token);
+          push('/admin');
+        })
+        .catch((err) => {
+          replace('/login');
+        });
     } else {
-      let res =  request("post", "/user/login", values)
-      res.then(data => {
-        setToken(data.token)
-        setUser(data.user)
-        push('/management')
-      }).catch(err => {
-        replace('/login')
-      })
+      let res = request('post', '/user/login', values);
+      res
+        .then((data) => {
+          setToken(data.token);
+          setUser(data.user);
+          push('/management');
+        })
+        .catch((err) => {
+          replace('/login');
+        });
     }
   };
 
@@ -49,18 +53,18 @@ const Login = () => {
   };
 
   const toRegister = () => {
-   push('/register');
+    push('/register');
   };
 
   return (
-    <div style={{ maxWidth: 800, width: '75%', margin: '0 auto', paddingTop: 25}}>
+    <div style={{ maxWidth: 800, width: '75%', margin: '0 auto', paddingTop: 25 }}>
       <center>登录</center>
       <Form
         title="用户登录"
         name="basic"
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
-        style={{ marginTop: 25}}
+        style={{ marginTop: 25 }}
       >
         <Form.Item label="电话" name="telephone" rules={[{ required: true, message: '电话不能为空' }]}>
           <Input
@@ -79,11 +83,7 @@ const Login = () => {
         </Form.Item>
 
         <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            style={{ width: '100%', margin: '0 auto' }}
-          >
+          <Button type="primary" htmlType="submit" style={{ width: '100%', margin: '0 auto' }}>
             登录
           </Button>
           <Button type="link" onClick={toRegister} style={{ width: '100%', margin: '0 auto' }}>
@@ -91,9 +91,14 @@ const Login = () => {
           </Button>
         </Form.Item>
         <Form.Item valuePropName="isAdmin">
-          <Switch checkedChildren="管理员" unCheckedChildren="用户" defaultChecked={false} onChange={ (checked, event) => {
-            setIsAdmin(checked)
-          } } />
+          <Switch
+            checkedChildren="管理员"
+            unCheckedChildren="用户"
+            defaultChecked={false}
+            onChange={(checked, event) => {
+              setIsAdmin(checked);
+            }}
+          />
         </Form.Item>
       </Form>
     </div>

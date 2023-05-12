@@ -1,8 +1,8 @@
 'use client';
-import { Button,  Form, Input, Select, Modal } from 'antd';
+import { Button, Form, Input, Select, Modal } from 'antd';
 import { useRouter } from 'next/navigation';
-import {useState} from "react";
-import {request} from "@/utils/request";
+import { useState } from 'react';
+import { request } from '@/utils/request';
 
 const { Option } = Select;
 
@@ -25,7 +25,7 @@ const formItemLayout = {
 
 const Register = () => {
   const [form] = Form.useForm();
-  const { replace} = useRouter();
+  const { replace } = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
@@ -34,22 +34,22 @@ const Register = () => {
 
   const handleOk = () => {
     setIsModalOpen(false);
-    toLogin()
+    toLogin();
   };
 
   const onFinish = (values: any) => {
     console.log('Received values of form: ', values);
     let reqBody = {
-      "username": values.username,
-      "gender": values.gender,
-      "email": values.email,
-      "telephone": parseInt(values.telephone),
-      "password": values.password
-    }
-    let res = request('post', 'user/register', reqBody)
-    res.then(data => {
-      showModal()
-    })
+      username: values.username,
+      gender: values.gender,
+      email: values.email,
+      telephone: parseInt(values.telephone),
+      password: values.password
+    };
+    let res = request('post', 'user/register', reqBody);
+    res.then((data) => {
+      showModal();
+    });
   };
   const toLogin = () => {
     replace('/login');
@@ -64,7 +64,7 @@ const Register = () => {
         name="register"
         title="用户注册"
         onFinish={onFinish}
-        style={{ marginTop: 25}}
+        style={{ marginTop: 25 }}
       >
         <Form.Item
           name="username"
@@ -153,7 +153,6 @@ const Register = () => {
         </Modal>
       </Form>
     </div>
-
   );
 };
 

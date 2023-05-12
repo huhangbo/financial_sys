@@ -17,8 +17,7 @@ import Calculator from '@pie-framework/material-ui-calculator';
 import { Button, Divider, Dropdown, Input, Popover, theme } from 'antd';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useState } from 'react';
-import {useCookieEntry} from "@/utils/cookie";
-
+import { useCookieEntry } from '@/utils/cookie';
 
 const Component = ({ children }: { children: React.ReactNode }) => {
   const [settings, setSetting] = useState<Partial<ProSettings> | undefined>({
@@ -28,7 +27,7 @@ const Component = ({ children }: { children: React.ReactNode }) => {
   });
   const pathname = usePathname();
   const { push, replace } = useRouter();
-  const [user, setUser] = useCookieEntry('user', {})
+  const [user, setUser] = useCookieEntry('user', {});
 
   // calculator
   const [clicked, setClicked] = useState(false);
@@ -71,23 +70,23 @@ const Component = ({ children }: { children: React.ReactNode }) => {
               {
                 path: '/management',
                 name: '财务管理',
-                icon: <MoneyCollectFilled />,
+                icon: <MoneyCollectFilled />
               },
               {
                 path: '/statistic',
                 name: '财务统计',
-                icon: <ProjectFilled />,
+                icon: <ProjectFilled />
                 // routes: [
-                  // {
-                  //   path: '/statistic/year',
-                  //   name: '年度统计',
-                  //   icon: 'https://gw.alipayobjects.com/zos/antfincdn/upvrAjAPQX/Logo_Tech%252520UI.svg'
-                  // },
-                  // {
-                  //   path: '/statistic/month',
-                  //   name: '月度统计',
-                  //   icon: <SignalFilled />
-                  // }
+                // {
+                //   path: '/statistic/year',
+                //   name: '年度统计',
+                //   icon: 'https://gw.alipayobjects.com/zos/antfincdn/upvrAjAPQX/Logo_Tech%252520UI.svg'
+                // },
+                // {
+                //   path: '/statistic/month',
+                //   name: '月度统计',
+                //   icon: <SignalFilled />
+                // }
                 // ]
               },
               {
@@ -162,7 +161,6 @@ const Component = ({ children }: { children: React.ReactNode }) => {
               );
             }
           }}
-
           headerTitleRender={(logo, title, _) => {
             const defaultDom = (
               <a>

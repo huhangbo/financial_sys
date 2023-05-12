@@ -3,7 +3,7 @@
 import { Button, Form, Input, Modal, Space, Tag } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { ProList } from '@ant-design/pro-components';
-import {request} from "@/utils/request";
+import { request } from '@/utils/request';
 
 const { TextArea } = Input;
 interface Notes {
@@ -15,7 +15,7 @@ interface Notes {
   updated_at?: string;
 }
 
-const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({open, onCreate, onCancel,}) => {
+const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({ open, onCreate, onCancel }) => {
   const [form] = Form.useForm();
 
   return (
@@ -31,37 +31,41 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({open, onCrea
           .then((values) => {
             form.resetFields();
             onCreate(values);
-            let res = request("post", "notes/add", values)
+            let res = request('post', 'notes/add', values);
           })
           .catch((info) => {
             console.log('Validate Failed:', info);
           });
       }}
     >
-      <Form
-        form={form}
-        layout="vertical"
-        name="form_in_modal"
-        initialValues={{ modifier: 'public' }}
-      >
-        <Form.Item name="title" label="标题"
+      <Form form={form} layout="vertical" name="form_in_modal" initialValues={{ modifier: 'public' }}>
+        <Form.Item
+          name="title"
+          label="标题"
           rules={[{ required: true, message: 'Please input the title of collection!' }]}
         >
           <Input />
         </Form.Item>
-        <Form.Item name="detail" label="正文" rules={[{ required: true, message: 'Please input the detail of collection!' }]}>
-          <TextArea rows={4}/>
+        <Form.Item
+          name="detail"
+          label="正文"
+          rules={[{ required: true, message: 'Please input the detail of collection!' }]}
+        >
+          <TextArea rows={4} />
         </Form.Item>
-        <Form.Item name="place" label="地点" rules={[{ required: true, message: 'Please input the title of collection!' }]}>
-          <Input/>
+        <Form.Item
+          name="place"
+          label="地点"
+          rules={[{ required: true, message: 'Please input the title of collection!' }]}
+        >
+          <Input />
         </Form.Item>
       </Form>
     </Modal>
   );
 };
 
-
-export default function Notes () {
+export default function Notes() {
   const [list, setList] = useState<Notes[]>([]);
   const [open, setOpen] = useState(false);
 
@@ -69,15 +73,15 @@ export default function Notes () {
     console.log('Received values of form: ', values);
     setOpen(false);
   };
-  useEffect( () => {
-    let res = request("get", "notes/list")
-    res.then( data => {
-      console.log(data)
+  useEffect(() => {
+    let res = request('get', 'notes/list');
+    res.then((data) => {
+      console.log(data);
       setList(data.notes_list);
-    })
+    });
   }, []);
   return (
-    <ProList <Notes>
+    <ProList<Notes>
       rowKey="notes_id"
       headerTitle="备忘录"
       dataSource={list}
@@ -88,7 +92,7 @@ export default function Notes () {
             新建
           </Button>,
           <CollectionCreateForm
-            key = "form"
+            key="form"
             open={open}
             onCreate={onCreate}
             onCancel={() => {
@@ -99,21 +103,21 @@ export default function Notes () {
       }}
       editable={{
         onSave: async (key, record, originRow) => {
-          let res = request("post", "notes/update", record)
+          let res = request('post', 'notes/update', record);
           return true;
-          },
+        },
         onDelete: async (key, record) => {
-          let res = request("post", "notes/delete", [key])
-          return true
+          let res = request('post', 'notes/delete', [key]);
+          return true;
         }
       }}
       onDataSourceChange={setList}
       metas={{
         title: {
-          dataIndex: 'title',
+          dataIndex: 'title'
         },
         description: {
-          dataIndex: 'detail',
+          dataIndex: 'detail'
         },
         subTitle: {
           render: () => {
@@ -122,20 +126,21 @@ export default function Notes () {
                 <Tag color="blue">Ant Design</Tag>
               </Space>
             );
-            },
+          }
         },
         actions: {
           render: (text, row, index, action) => [
-            <a onClick={() => {
+            <a
+              onClick={() => {
                 action?.startEditable(row.notes_id);
               }}
-               key="link"
+              key="link"
             >
               编辑
-            </a>,
-          ],
-        },
+            </a>
+          ]
+        }
       }}
     />
   );
-};
+}
