@@ -1,8 +1,8 @@
 // @ts-nocheck
 'use client';
-import { Button, Checkbox, Form, Input, Select, Modal, notification, InputNumber, Tabs } from 'antd';
+import { Button, Form, Input, Select, notification, Tabs } from 'antd';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React from 'react';
 import { request } from '@/utils/request';
 import cookie from 'react-cookies';
 import { useCookieEntry } from '@/utils/cookie';
@@ -30,7 +30,6 @@ const User = () => {
   let info = cookie.load('user');
   const [form] = Form.useForm();
   const [user, setUser] = useCookieEntry('user', {});
-  const { replace, push } = useRouter();
 
   const items: any = [
     {
@@ -131,13 +130,26 @@ const User = () => {
 
           <Form.Item
             name="new_password"
+            label="密码"
+            rules={[
+              {
+                required: true,
+                message: '请输入新密码'
+              }
+            ]}
+            hasFeedback
+          >
+            <Input.Password />
+          </Form.Item>
+          <Form.Item
+            name="confirm"
             label="新密码"
-            dependencies={['password']}
+            dependencies={['new_password']}
             hasFeedback
             rules={[
               {
                 required: true,
-                message: '请再次输入密码'
+                message: '请再次输入新密码'
               },
               ({ getFieldValue }) => ({
                 validator(_, value) {
