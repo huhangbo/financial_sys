@@ -9,7 +9,7 @@ import { Pie } from '@ant-design/plots';
 
 const App: React.FC = () => {
   const [bill, setBill] = useState({ expend: 0, income: 0 });
-  const [selectTime, setSelectTime] = useState({ year: 0, month: 0 });
+  const [selectTime, setSelectTime] = useState({ year: 2023, month: 4 });
   const [budget, setBudget] = useState({ fee: 0, budget_id: 0 });
   let tmpValue = 0;
   useEffect(() => {
@@ -88,15 +88,10 @@ const App: React.FC = () => {
               />
             </Col>
             <Col span={12}>
-              <Statistic
-                title="收入(元)"
-                value={Math.floor(bill.expend) / 100}
-                precision={2}
-                style={{ maxWidth: 100 }}
-              />
+              <Statistic title="收入(元)" value={Math.floor(bill.income) / 100} precision={2} />
             </Col>
             <Col span={12}>
-              <Statistic title="支出(元)" value={Math.floor(bill.income) / 100} precision={2} />
+              <Statistic title="支出(元)" value={Math.floor(bill.expend) / 100} precision={2} />
             </Col>
             <Col span={24} push={4}>
               <Statistic title="结余(元)" value={Math.floor(bill.income - bill.expend) / 100} precision={2} />

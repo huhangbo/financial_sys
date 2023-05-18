@@ -566,7 +566,8 @@ const Category: React.FC = () => {
     },
     {
       title: '类型',
-      dataIndex: 'bill_type'
+      dataIndex: 'bill_type',
+      sorter: (a: any, b: any) => a.bill_type - b.bill_type
     },
     {
       title: '创建时间',
@@ -654,7 +655,7 @@ const Category: React.FC = () => {
         rowKey={'category_id'}
         rowSelection={rowSelection}
         columns={newsColumns}
-        pagination={{ position: [] }}
+        pagination={{ position: [], pageSize: 100 }}
         dataSource={list}
       />
       <AdminCategory

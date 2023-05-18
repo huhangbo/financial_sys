@@ -44,7 +44,7 @@ const Edit: React.FC<any> = ({ open, onCreate, onCancel, info, isAdd, list, setL
                 list.map((item: any) => {
                   if (item.bill_id === values.bill_id) {
                     item.remark = values.remark;
-                    item.fee = values.fee;
+                    item.fee = values.fee * 100;
                     item.category_id = values.category_id;
                   }
                   newList.push(item);
@@ -246,7 +246,7 @@ const List: React.FC<any> = ({ categoryMap }) => {
         rowKey={'bill_id'}
         rowSelection={rowSelection}
         columns={userColumns}
-        pagination={{ position: [] }}
+        pagination={{ position: [], pageSize: 200 }}
         dataSource={list}
       />
       <div style={{ marginTop: 16 }}>
